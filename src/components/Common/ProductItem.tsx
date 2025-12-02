@@ -10,7 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 import CheckoutBtn from "../Shop/CheckoutBtn";
 import WishlistButton from "../Wishlist/AddWishlistButton";
 import { formatPrice } from "@/utils/formatePrice";
@@ -30,7 +30,7 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
   // const [product, setProduct] = useState({});
   const dispatch = useDispatch<AppDispatch>();
 
-  const { addItem, cartDetails } = useShoppingCart();
+  const { addItem, cartDetails } = useCart();
 
   const pathUrl = usePathname();
 
@@ -93,11 +93,10 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
         className={`relative overflow-hidden border border-gray-3 flex items-center justify-center rounded-xl bg-${bgClr} min-h-[270px] mb-4`}
       >
         <Link
-          href={`${
-            pathUrl.includes("products")
-              ? `${item?.slug}`
-              : `products/${item?.slug}`
-          }`}
+          href={`${pathUrl.includes("products")
+            ? `${item?.slug}`
+            : `products/${item?.slug}`
+            }`}
         >
           <Image
             src={defaultVariant?.image ? defaultVariant.image : ""}
@@ -153,11 +152,10 @@ const ProductItem = ({ item, bgClr = "[#F6F7FB]" }: Props) => {
 
       <h3 className="font-semibold text-dark ease-out text-base duration-200 hover:text-blue mb-1.5 line-clamp-1">
         <Link
-          href={`${
-            pathUrl.includes("products")
-              ? `${item?.slug}`
-              : `products/${item?.slug}`
-          }`}
+          href={`${pathUrl.includes("products")
+            ? `${item?.slug}`
+            : `products/${item?.slug}`
+            }`}
         >
           {" "}
           {item.title}{" "}

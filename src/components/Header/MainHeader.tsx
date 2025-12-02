@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 import { menuData } from "./menuData";
 import MobileMenu from "./MobileMenu";
 import DesktopMenu from "./DesktopMenu";
@@ -25,7 +25,7 @@ const MainHeader = ({ headerData }: IProps) => {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [stickyMenu, setStickyMenu] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const { handleCartClick, cartCount, totalPrice } = useShoppingCart();
+  const { handleCartClick, cartCount, totalPrice } = useCart();
   const wishlistCount = useAppSelector((state) => state.wishlistReducer).items
     ?.length;
 
@@ -80,12 +80,12 @@ const MainHeader = ({ headerData }: IProps) => {
                 </p>
               </div>
               <div className="flex divide-x divide-white/20">
-                  <Link
-                    href="/signup"
-                    className="pr-3 text-sm font-medium text-white transition hover:text-blue-300"
-                  >
-                    Create an account
-                  </Link>
+                <Link
+                  href="/signup"
+                  className="pr-3 text-sm font-medium text-white transition hover:text-blue-300"
+                >
+                  Create an account
+                </Link>
                 <Link
                   href="#"
                   className="pl-3 text-sm font-medium text-white transition hover:text-blue-300"

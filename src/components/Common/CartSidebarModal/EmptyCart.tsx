@@ -1,9 +1,9 @@
 import { EmptyCartIcon } from "@/assets/icons";
 import Link from "next/link";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 
 const EmptyCart = () => {
-  const { handleCartClick } = useShoppingCart();
+  const { handleCartClick } = useCart();
 
   return (
     <div className="text-center">

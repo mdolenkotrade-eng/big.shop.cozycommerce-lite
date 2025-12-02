@@ -2,7 +2,7 @@
 import { CloseLine } from "@/assets/icons";
 import Link from "next/link";
 import { useEffect } from "react";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 import EmptyCart from "./EmptyCart";
 import SingleItem from "./SingleItem";
 import { formatPrice } from "@/utils/formatePrice";
@@ -15,7 +15,7 @@ const CartSidebarModal = () => {
     handleCartClick,
     cartDetails,
     totalPrice,
-  } = useShoppingCart();
+  } = useCart();
 
   useEffect(() => {
     // closing modal while clicking outside
@@ -39,20 +39,18 @@ const CartSidebarModal = () => {
     router.push("/checkout");
     handleCartClick();
   };
-  
+
   return (
     <>
       <div
-        className={`fixed top-0 left-0 z-9999 overflow-y-auto no-scrollbar w-full h-screen bg-dark/70 ease-linear duration-300 ${
-          shouldDisplayCart ? "block" : "hidden"
-        }`}
+        className={`fixed top-0 left-0 z-9999 overflow-y-auto no-scrollbar w-full h-screen bg-dark/70 ease-linear duration-300 ${shouldDisplayCart ? "block" : "hidden"
+          }`}
       ></div>
 
       {/* <div className="flex items-center justify-end"> */}
       <div
-        className={`${
-          shouldDisplayCart ? "translate-x-0" : "translate-x-full"
-        } fixed z-999999 w-full h-screen max-w-[470px] ease-linear duration-300 shadow-1 bg-white px-4 sm:px-7.5 lg:px-10 top-0 right-0 modal-content flex flex-col`}
+        className={`${shouldDisplayCart ? "translate-x-0" : "translate-x-full"
+          } fixed z-999999 w-full h-screen max-w-[470px] ease-linear duration-300 shadow-1 bg-white px-4 sm:px-7.5 lg:px-10 top-0 right-0 modal-content flex flex-col`}
       >
         <div className="sticky top-0 bg-white flex items-center justify-between pb-7 pt-4 sm:pt-7.5 lg:pt-10 border-b border-gray-3 mb-7.5">
           <h2 className="text-lg font-medium text-dark sm:text-2xl">

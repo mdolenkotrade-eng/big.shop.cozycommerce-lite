@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { updateQuickView } from "@/redux/features/quickView-slice";
 import { addItemToWishlist } from "@/redux/features/wishlist-slice";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 import toast from "react-hot-toast";
 import ActionBtn from "./ActionBtn";
 import { formatPrice } from "@/utils/formatePrice";
@@ -19,7 +19,7 @@ const SingleItem = ({ item }: { item: Product }) => {
   );
   const { openModal } = useModalContext();
   const dispatch = useDispatch<AppDispatch>();
-  const { addItem, cartDetails } = useShoppingCart();
+  const { addItem, cartDetails } = useCart();
   const wishlistItems = useAppSelector((state) => state.wishlistReducer.items);
 
   const isAlradyAdded = Object.values(cartDetails ?? {}).some(

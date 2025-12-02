@@ -1,10 +1,10 @@
 import { TrashIcon } from "@/assets/icons";
 import Image from "next/image";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 import { useRouter } from "next/navigation";
 
 const SingleItem = ({ item }: any) => {
-  const { removeItem,handleCartClick } = useShoppingCart();
+  const { removeItem, handleCartClick } = useCart();
   const router = useRouter();
   const handleRemoveFromCart = () => {
     removeItem(item.id);
@@ -15,7 +15,7 @@ const SingleItem = ({ item }: any) => {
     setTimeout(() => {
       handleCartClick();
     }, 500);
-  };  
+  };
 
   return (
     <div className="flex items-center justify-between gap-5">

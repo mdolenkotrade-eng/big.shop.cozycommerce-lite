@@ -17,7 +17,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { useShoppingCart } from "use-shopping-cart";
+import { useCart } from "@/hooks/useCart";
 import ReviewStar from "../Shop/ReviewStar";
 
 const QuickViewModal = () => {
@@ -25,7 +25,7 @@ const QuickViewModal = () => {
   const { openPreviewModal } = usePreviewSlider();
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
-  const { addItem } = useShoppingCart();
+  const { addItem } = useCart();
   const [avgRating, setAvgRating] = useState(0);
   const [totalRating, setTotalRating] = useState(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -142,9 +142,8 @@ const QuickViewModal = () => {
     <>
       {product?.title && (
         <div
-          className={`${
-            isModalOpen ? "z-99999" : "hidden"
-          } fixed top-0 left-0 o overflow-y-scroll no-scrollbar max-h-[100vh] w-full sm:py-20 xl:py-25 2xl:py-[230px] bg-dark/70 sm:px-8 px-4 py-5`}
+          className={`${isModalOpen ? "z-99999" : "hidden"
+            } fixed top-0 left-0 o overflow-y-scroll no-scrollbar max-h-[100vh] w-full sm:py-20 xl:py-25 2xl:py-[230px] bg-dark/70 sm:px-8 px-4 py-5`}
         >
           <div className="flex items-center justify-center ">
             <div className="w-full max-w-[1100px] rounded-xl shadow-3 bg-white p-7.5 relative modal-content">
@@ -164,9 +163,8 @@ const QuickViewModal = () => {
                         <button
                           onClick={() => setActivePreview(key)}
                           key={key}
-                          className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-blue ${
-                            activePreview === key && "border-2 border-blue"
-                          }`}
+                          className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-blue ${activePreview === key && "border-2 border-blue"
+                            }`}
                         >
                           <Image
                             src={thumb.image}
@@ -212,7 +210,7 @@ const QuickViewModal = () => {
                         {Math.round(
                           ((product.price - product.discountedPrice) /
                             product.price) *
-                            100
+                          100
                         )}
                         % OFF
                       </span>
@@ -265,9 +263,8 @@ const QuickViewModal = () => {
 
                       <span className="flex items-center gap-2">
                         <span
-                          className={`text-lg font-medium text-dark-4 xl:text-2xl ${
-                            product.discountedPrice ? "line-through" : ""
-                          }`}
+                          className={`text-lg font-medium text-dark-4 xl:text-2xl ${product.discountedPrice ? "line-through" : ""
+                            }`}
                         >
                           {formatPrice(product.price)}
                         </span>

@@ -3,13 +3,23 @@ import { RootState } from "../store";
 
 type InitialState = {
   items: CartItem[];
+  shouldDisplayCart: boolean;
 };
 
-type CartItem = {
-  id: number;
-  title: string;
+export type CartItem = {
+  id: string | number;
+  name: string;
   price: number;
   quantity: number;
+  currency?: string;
+  image?: string;
+  slug?: string;
+  availableQuantity?: number;
+  color?: string;
+  size?: string;
+  attribute?: any;
+  // Legacy support
+  title?: string;
   imgs?: {
     thumbnails: string[];
     previews: string[];
@@ -18,6 +28,7 @@ type CartItem = {
 
 const initialState: InitialState = {
   items: [],
+  shouldDisplayCart: false,
 };
 
 export const cart = createSlice({
@@ -25,29 +36,41 @@ export const cart = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action: PayloadAction<CartItem>) => {
-      const { id, title, price, quantity, imgs } =
-        action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
+      const item = action.payload;
+      const existingItem = state.items.find((i) => i.id === item.id);
 
       if (existingItem) {
-        existingItem.quantity += quantity;
+        existingItem.quantity += item.quantity || 1;
       } else {
         state.items.push({
-          id,
-          title,
-          price,
-          quantity,
-          imgs,
+          ...item,
+          quantity: item.quantity || 1,
         });
       }
     },
-    removeItemFromCart: (state, action: PayloadAction<number>) => {
+    removeItemFromCart: (state, action: PayloadAction<string | number>) => {
       const itemId = action.payload;
       state.items = state.items.filter((item) => item.id !== itemId);
     },
+    incrementItem: (state, action: PayloadAction<string | number>) => {
+      const itemId = action.payload;
+      const existingItem = state.items.find((item) => item.id === itemId);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      }
+    },
+    decrementItem: (state, action: PayloadAction<string | number>) => {
+      const itemId = action.payload;
+      const existingItem = state.items.find((item) => item.id === itemId);
+
+      if (existingItem && existingItem.quantity > 1) {
+        existingItem.quantity -= 1;
+      }
+    },
     updateCartItemQuantity: (
       state,
-      action: PayloadAction<{ id: number; quantity: number }>
+      action: PayloadAction<{ id: string | number; quantity: number }>
     ) => {
       const { id, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
@@ -56,14 +79,41 @@ export const cart = createSlice({
         existingItem.quantity = quantity;
       }
     },
-
+    clearCart: (state) => {
+      state.items = [];
+    },
     removeAllItemsFromCart: (state) => {
       state.items = [];
+    },
+    loadCartFromStorage: (state, action: PayloadAction<CartItem[]>) => {
+      state.items = action.payload;
+    },
+    toggleCartModal: (state) => {
+      state.shouldDisplayCart = !state.shouldDisplayCart;
+    },
+    setCartModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.shouldDisplayCart = action.payload;
     },
   },
 });
 
+// Selectors
 export const selectCartItems = (state: RootState) => state.cartReducer.items;
+
+export const selectShouldDisplayCart = (state: RootState) =>
+  state.cartReducer.shouldDisplayCart;
+
+export const selectCartCount = createSelector([selectCartItems], (items) => {
+  return items.reduce((total, item) => total + item.quantity, 0);
+});
+
+export const selectCartDetails = createSelector([selectCartItems], (items) => {
+  const details: Record<string | number, CartItem> = {};
+  items.forEach((item) => {
+    details[item.id] = item;
+  });
+  return details;
+});
 
 export const selectTotalPrice = createSelector([selectCartItems], (items) => {
   return items.reduce((total, item) => {
@@ -71,10 +121,26 @@ export const selectTotalPrice = createSelector([selectCartItems], (items) => {
   }, 0);
 });
 
+export const selectFormattedTotalPrice = createSelector(
+  [selectTotalPrice],
+  (totalPrice) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(totalPrice / 100);
+  }
+);
+
 export const {
   addItemToCart,
   removeItemFromCart,
+  incrementItem,
+  decrementItem,
   updateCartItemQuantity,
+  clearCart,
   removeAllItemsFromCart,
+  loadCartFromStorage,
+  toggleCartModal,
+  setCartModalOpen,
 } = cart.actions;
 export default cart.reducer;

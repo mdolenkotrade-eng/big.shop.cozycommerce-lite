@@ -3,7 +3,9 @@
 A Complete and full-stack eCommerce platform built with Next.js. Launch your online store with core features like product management, secure Stripe payments, built-in custom CMS, and responsive design. Enjoy full control, lifetime free updates, and comprehensive documentation to build, develop, and scale your store effortlessly.
 
 #### [🌐 Visit Website](https://cozycommerce.dev/)
+
 #### [📑 Explore Docs](https://cozycommerce.dev/docs)
+
 #### [🚀 Live Demo](https://demo.cozycommerce.dev/)
 
 CozyCommerce is powerful full-stack, self-hosted eCommerce solution built with Next.js. Featuring one-click deployment, this platform offers seamless scalability, custom CMS integration, and secure payments—perfect for creating and managing your online store with ease.
@@ -20,7 +22,6 @@ This is the free Lite version of CozyCommerce, featuring a basic landing page to
 | Premium Email Support            | Not Included                   | Included                             |
 | Lifetime Free Updates            | Included                       | Included                             |
 
-
 # CozyCommerce Installation
 
 Welcome to **CozyCommerce** — a modern, high-performance ecommerce solution based on Next.js built for scalability and developer productivity.
@@ -33,7 +34,7 @@ This guide will walk you through setting up the project locally and deploying it
 
 Before you begin, ensure that the following tools are installed on your machine:
 
-* **[Node.js](https://nodejs.org/)** version 19.0.0 or higher
+* **[Node.js](https://nodejs.org/)** version 20.0.9 or higher
 * **[npm](https://www.npmjs.com/)** version 10.0.0 or higher
 * **[Git](https://git-scm.com/)** for version control
 
@@ -154,5 +155,3 @@ Explore our full documentation for deeper integration guidance:
 ---
 
 Need help? Feel free to reach out or open an issue on the [GitHub repository](https://github.com/CozyCommerce/cozycommerce-lite). Happy coding! 🎉
-
-
